@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from flask import Flask
 import requests
 import re
@@ -19,7 +20,9 @@ Jar Price = $30
 Money per Bath = Jar Price * Jars per bath = 13,830 USD (per bath)
 '''
 
-KEY = os.environ['APIKEY']
+load_dotenv(verbose=True)
+
+KEY = os.getenv('APIKEY')
 app = Flask(__name__)
 
 @app.route('/')
@@ -29,6 +32,7 @@ def hello():
 
 def get_currency():
     updates_currency = {}
+    print(KEY)
     r = requests.get(f'http://data.fixer.io/api/latest?access_key={KEY}&format=1')
     for money, value in r.json()['rates'].items():
         updates_currency[money] = value
@@ -73,7 +77,7 @@ def transform_html():
         <div class="container" style="padding-bottom: 25px;">
             <img style="width: 100%" src="https://wallpapercave.com/wp/wp6751479.jpg">
             <div class="centered">
-                <img src="https://en.bloggif.com/tmp/94f16df5931a0f634f16a85b9345774c/text.gif?1607316949">
+                <img src="https://media.tenor.com/images/87c8bcd7c04d8f25701406bbe948adf3/tenor.gif">
             </div>
         </div>
         <div class="container">
